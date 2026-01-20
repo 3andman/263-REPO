@@ -3,15 +3,15 @@
 let w = 100;
 let h = 140;
 
-let rect1x = 200;
-let rect1y = 200;
+let rect1x = 400;
+let rect1y = 400;
 let rect2x = 400;
 let rect2y = 400;
 let rect3x = 600;
 let rect3y = 600;
 
 function setup() {
-  createCanvas(1000, 1000);
+  createCanvas(1200, 1200);
 }
 
 function drawRect1() {
