@@ -66,5 +66,8 @@ function createFlower() {
         ${flower.petalColor.b}
         )`;
      //add to the DOM
-     document.getElementsByClassName("grass")[0].appendChild(flower.flowerPetalDiv);
+      document.getElementsByClassName("grass")[0].appendChild(flower.flowerPetalDiv);
+      
+      
+      
 }

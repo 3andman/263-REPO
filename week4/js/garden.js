@@ -69,17 +69,15 @@ window.onload = function () {
         ${garden.grass.grassColor.g},
         ${garden.grass.grassColor.b}
         )`;
-      document.getElementsByTagName("main")[0].appendChild(garden.grass.grassDiv);
-      
+    document.getElementsByTagName("main")[0].appendChild(garden.grass.grassDiv);
   }
 
-  /* render the sun, sky and grass*/
-    createAndRenderTheGarden();
-    let flower = createFlower();
-    renderFlower(flower)
-    
-    for (let i = 0; i < garden.numFlowers; i++){
-        garden.flowers.push(createFlower())
-    }
-};;
+  // Create our flowers by counting up to the number of the flowers
+  for (let i = 0; i < garden.numFlowers; i++) {
+    // NEW! Create a new flower
+    let flower = new Flower();
+    // Add the flower to the array of flowers
+    garden.flowers.push(flower);
+  }
+};
 
