@@ -1,0 +1,127 @@
+/* import pixel font from google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* using Press Start 2P to give the game a retro pixel feel */
+
+/* set global font variable */
+:root {
+    --pixel-font: 'Press Start 2P', cursive;
+    /* assign pixel font to a variable for easy reuse */
+}
+
+/* reset body defaults and apply global styles */
+body {
+    font-family: var(--pixel-font);
+    /* use global pixel font */
+    color: #333;
+    /* fallback text color */
+    background-color: white;
+    /* background color */
+    background-image: url('../assets/images/main-bkg.jpg');
+    /* global background image */
+    background-size: cover;
+    /* make background cover the entire viewport */
+    background-position: center;
+    /* center background image */
+    background-repeat: no-repeat;
+    /* prevent background from tiling */
+}
+
+/* headings weight */
+h1,
+h2,
+h3 {
+    font-weight: 700;
+    /* bold headings */
+}
+
+/* universal box sizing and reset */
+* {
+    margin: 0;
+    /* remove default margin */
+    padding: 0;
+    /* remove default padding */
+    box-sizing: border-box;
+    /* padding border in element width and height */
+}
+
+/* base button styling */
+button {
+    font-family: inherit;
+    /* inherit font from parent */
+    cursor: pointer;
+    /* pointer cursor to indicate clickable */
+    border-radius: 8px;
+    /* rounded corners */
+    border: none;
+    /* remove default border */
+    transition: background-color 0.2s;
+    /* smooth color transition on hover */
+}
+
+/* flex container for common layout */
+.container {
+    display: flex;
+    /* use flexbox */
+    flex-direction: column;
+    /* stack child elements vertically */
+    align-items: center;
+    /* center horizontally */
+    justify-content: center;
+    /* center vertically */
+    text-align: center;
+}
+
+
+/* menu bar container */
+#menu-bar {
+    position: absolute;
+    /* position relative to viewport */
+    width: 20%;
+    /* menu takes 20% of viewport width */
+    height: 100vh;
+    /* full viewport height */
+    display: flex;
+    /* flex layout for inner sections */
+    flex-direction: column;
+    /* stack top and bottom areas */
+    justify-content: flex-start;
+    /* align children at top */
+    background-color: rgb(39, 38, 38);
+    /* dark background for contrast */
+    padding: 20px;
+    /* inner spacing */
+}
+
+/* top area for title */
+#menu-bar .menu-top {
+    flex: 0 0 30%;
+    display: flex;
+    justify-content: center;
+    /* center title horizontally */
+    align-items: center;
+    /* center title vertically */
+    text-align: center;
+    color: white;
+    /* title text color */
+}
+
+/* bottom area for info */
+#menu-bar .menu-bottom {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* stack info vertically */
+    justify-content: flex-start;
+    margin-top: 20px;
+    /* spacing from top section */
+    color: white;
+    /* info text color */
+    font-size: 1.2rem;
+    /* readable text size */
+}
+
+/* spacing for each info line */
+#menu-bar .menu-bottom p {
+    margin: 10px 0;
+    /* vertical spacing between info items */
+}

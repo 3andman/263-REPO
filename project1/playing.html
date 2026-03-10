@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- html5 doctype declaration -->
+
+<html lang="en">
+<!-- set language to english -->
+
+<head>
+    <meta charset="UTF-8">
+    <!-- set character encoding to utf-8 -->
+
+    <title>Playing Screen</title>
+    <!-- page title shown in browser tab -->
+
+    <!-- link to global styles -->
+    <link rel="stylesheet" href="css/global.css">
+
+    <!-- link to playing screen specific styles -->
+    <link rel="stylesheet" href="css/playing.css">
+</head>
+
+<body>
+    <!-- menu bar container -->
+    <div id="menu-bar">
+        <!-- top section of menu for game title -->
+        <div class="menu-top">
+            <h2>game title</h2>
+        </div>
+
+        <!-- bottom section of menu for game info -->
+        <div class="menu-bottom">
+            <!-- display current score -->
+            <p>score: <span id="menu-score">0</span></p>
+
+            <!-- display remaining hands -->
+            <p>hands: <span id="menu-hands">0</span></p>
+
+            <!-- display number of discards left -->
+            <p>discards: <span id="menu-discards">0</span></p>
+        </div>
+    </div>
+    <!-- end of menu bar -->
+
+    <!-- main play area where played cards appear -->
+    <div class="play-area">
+        <!-- cards that are played will be dynamically added here -->
+    </div>
+
+    <!-- hand of cards container -->
+    <div class="hand-container" id="hand-container">
+        <!-- cards will be appended here -->
+    </div>
+
+    <div class="hand-container">
+        <!-- duplicate container if needed in future -->
+    </div>
+
+    <!-- game control buttons -->
+    <div class="playing-controls">
+        <!-- draw new card button -->
+        <button id="draw-button">draw</button>
+
+        <!-- end current turn button -->
+        <button id="end-turn-button">end turn</button>
+    </div>
+
+    <!-- play and discard buttons for selected cards -->
+    <div class="play-controls">
+        <!-- play selected hand -->
+        <button class="play-hand-button">Play Hand</button>
+
+        <!-- discard selected cards -->
+        <button class="discard-button">Discard</button>
+    </div>
+
+    <!-- main playing screen javascript -->
+    <script type="module" src="js/playing.js"></script>
+</body>
+
+</html>

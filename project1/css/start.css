@@ -1,0 +1,73 @@
+
+/* start screen background and layout */
+.start-screen {
+    background-image: url("../assets/images/start-bkg.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    /* full viewport */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    /* space between title and buttons */
+}
+
+/* game title styling */
+.game-title {
+    font-size: 12rem;
+    font-weight: 1000;
+    margin-top: 200px;
+    margin-bottom: 300px;
+    color: white;
+    text-shadow: -10px 10px 0 #000;
+    /* pixel outline effect */
+}
+
+/* container for buttons */
+.button-group {
+    display: flex;
+    flex-direction: row;
+    /* horizontal layout */
+    gap: 100px;
+    /* space between buttons */
+    justify-content: center;
+    align-items: center;
+}
+
+/* start button styling */
+.start-button {
+    padding: 25px 50px;
+    font-size: 6rem;
+    border-radius: 16px;
+    background-color: #eaa7d8;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-shadow: -5px 5px 0 #000;
+    /* pixel outline for text */
+}
+
+/* start button hover */
+.start-button:hover {
+    background-color: #d68dc3;
+}
+
+/* instructions button styling */
+.instructions-button {
+    padding: 25px 50px;
+    font-size: 6rem;
+    border-radius: 16px;
+    background-color: #9edc84;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-shadow: -5px 5px 0 #000;
+}
+
+/* instructions button hover */
+.instructions-button:hover {
+    background-color: #81b36c;
+}

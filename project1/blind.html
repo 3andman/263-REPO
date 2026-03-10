@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- html5 doctype declaration -->
+
+<html lang="en">
+<!-- set language to english -->
+
+<head>
+    <meta charset="UTF-8">
+    <!-- set character encoding to utf-8 -->
+
+    <title>Blind Screen</title>
+    <!-- page title shown in browser tab -->
+
+    <!-- link to global styles -->
+    <link rel="stylesheet" href="css/global.css">
+
+    <!-- link to blind screen specific styles -->
+    <link rel="stylesheet" href="css/blind.css">
+</head>
+
+<body>
+    <!-- menu bar container -->
+    <div id="menu-bar">
+        <!-- top section of menu for game title -->
+        <div class="menu-top">
+            <h2 id="menu-title">game title</h2>
+        </div>
+
+        <!-- bottom section of menu for game info -->
+        <div class="menu-bottom">
+            <!-- display current score -->
+            <p>score: <span id="menu-score">0</span></p>
+
+            <!-- display remaining hands -->
+            <p>hands: <span id="menu-hands">0</span></p>
+
+            <!-- display number of discards left -->
+            <p>discards: <span id="menu-discards">0</span></p>
+        </div>
+    </div>
+    <!-- end of menu bar -->
+
+    <!-- container for blind selection slots -->
+    <div class="blind-container">
+        <!-- first blind slot -->
+        <div class="blind-slot">
+            <!-- button to select blind -->
+            <button class="blind-button">Small Blind</button>
+            <!-- info area below button -->
+            <div class="blind-info">info 1</div>
+        </div>
+
+        <!-- second blind slot -->
+        <div class="blind-slot">
+            <button class="blind-button">Big Blind</button>
+            <div class="blind-info">info 2</div>
+        </div>
+
+        <!-- third blind slot -->
+        <div class="blind-slot">
+            <button class="blind-button">Boss Blind</button>
+            <div class="blind-info">info 3</div>
+        </div>
+    </div>
+    <!-- end of blind slots container -->
+
+    <!-- blind screen javascript -->
+    <script type="module" src="js/blind.js"></script>
+</body>
+
+</html>

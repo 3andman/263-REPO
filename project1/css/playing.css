@@ -1,0 +1,125 @@
+/* hand container */
+.hand-container {
+    display: flex;
+    /* arrange cards horizontally */
+    justify-content: center;
+    /* center cards in container */
+    align-items: flex-end;
+    /* align cards to bottom */
+    height: 100vh;
+    /* full viewport height */
+    margin-left: 22%;
+    /* offset to avoid menu bar */
+    padding-bottom: 250px;
+    /* lift cards up from bottom for buttons below */
+    padding-left: 5%;
+    padding-right: 5%;
+    gap: 15px;
+    /* space between each card */
+}
+
+/* base style for individual card */
+.card {
+    width: 250px;
+    /* fixed width for each card */
+    margin-left: -90px;
+    /* negative margin to overlap cards for curved hand */
+    position: relative;
+    cursor: grab;
+    /* show grab cursor */
+    transition: margin-bottom 0.2s ease, transform 0.2s ease;
+    /* smooth hover and selection animations */
+}
+
+/* hover effect for cards that are not selected */
+.card:not(.selected):hover {
+    transform: translateY(-10px);
+    /* small lift on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    /* subtle shadow while hovering */
+}
+
+/* selected state */
+.card.selected {
+    margin-bottom: 70px;
+    /* lift card up when selected */
+    transform: scale(1.15);
+    /* slight scale for emphasis */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    /* stronger shadow for selected cards */
+}
+
+/* curve the hand */
+.card:nth-child(1) {transform: rotate(-5deg) translateY(45px);}
+.card:nth-child(2) {transform: rotate(-4deg) translateY(31px);}
+.card:nth-child(3) {transform: rotate(-3deg) translateY(21px);}
+.card:nth-child(4) {transform: rotate(-2deg) translateY(11px);}
+.card:nth-child(5) {transform: rotate(-1deg) translateY(5px);}
+.card:nth-child(6) {transform: rotate(1deg) translateY(5px);}
+.card:nth-child(7) {transform: rotate(2deg) translateY(11px);}
+.card:nth-child(8) {transform: rotate(3deg) translateY(21px);}
+.card:nth-child(9) {transform: rotate(4deg) translateY(31px);}
+.card:nth-child(10) {transform: rotate(5deg) translateY(45px);}
+
+
+/* card image styling */
+.card img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+
+/* container for play and discard buttons */
+.play-controls {
+    position: absolute;
+    bottom: 1.5%;
+    left: 59.8%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 80px;
+}
+
+/* style for play  discard buttons */
+.play-hand-button,
+.discard-button {
+    padding: 25px 50px;
+    font-size: 2rem;
+    border-radius: 16px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 500px;
+    height: 150px;
+    white-space: nowrap;
+    /* prevent text wrapping */
+}
+
+/* play hand button colors */
+.play-hand-button {background-color: #eaa7d8;}
+.play-hand-button:hover {background-color: #d68dc3;}
+
+/* discard button colors */
+.discard-button {background-color: #9edc84;}
+.discard-button:hover {background-color: #81b36c;}
+
+/* area where played cards appear */
+.play-area {
+    position: absolute;
+    bottom: 50%;
+    left: 55%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    pointer-events: none;
+    /* avoid interfering with hand clicks */
+}
+
+.play-area img {
+    width: 250px;
+    height: auto;
+    transition: transform 0.3s ease, bottom 0.3s ease;
+    z-index: 100;
+}
