@@ -105,23 +105,110 @@ button {
     /* title text color */
 }
 
-/* bottom area for info */
-#menu-bar .menu-bottom {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    /* stack info vertically */
-    justify-content: flex-start;
-    margin-top: 20px;
-    /* spacing from top section */
+/* menu stat boxes */
+#menu-bar .menu-bottom p {
+    margin: 15px 0;
+    background-color: #52b788;
+    /* same theme color as buttons */
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 2.4rem;
     color: white;
-    /* info text color */
-    font-size: 1.2rem;
-    /* readable text size */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    margin-bottom: 60px;
+    height: 150px;
 }
 
-/* spacing for each info line */
-#menu-bar .menu-bottom p {
-    margin: 10px 0;
-    /* vertical spacing between info items */
+
+/* stat sections */
+.menu-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+/* label above square */
+.menu-label {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+/* square box */
+.menu-square {
+    width: 350px;
+    height: 300px;
+    background-color: #9edc84;
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 6rem;
+    color: white;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* score rectangle */
+.menu-rectangle {
+    width: 430px;
+    height: 120px;
+
+    background-color: #52b788;
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 4rem;
+    color: white;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* 
+   back button
+*/
+.back-button {
+    position: fixed;
+    /* fixed position */
+    top: 18px;
+    /* from top */
+    left: 18px;
+    /* from left */
+    z-index: 9999;
+    /* above everything */
+
+    text-decoration: none;
+    /* remove underline */
+    font-family: "PortFont", monospace;
+    /* font */
+    font-size: 25px;
+    /* text size */
+    color: rgba(255, 255, 255, 0.85);
+    /* text color */
+
+    background: rgba(255, 255, 255, 0.08);
+    /* button background */
+    padding: 10px 14px;
+    /* inner spacing */
+    border-radius: 12px;
+    /* rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    /* border color */
+
+    transition: background 150ms ease, transform 150ms ease;
+    /* smooth hover */
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    /* hover background */
+    transform: translateY(-2px);
+    /* slight lift */
 }
