@@ -91,6 +91,37 @@ hand.sort((a, b) => getCardRank(b) - getCardRank(a)); // sort descending
 const handContainer = document.querySelector(".hand-container"); // hand of cards
 const playArea = document.querySelector(".play-area"); // played cards area
 
+// update the menu title based on blind
+const menuTitle = document.getElementById("menu-title");
+
+const selectedBlind = localStorage.getItem("selectedBlind");
+
+let scoreGoal = 0;
+
+if (selectedBlind === "small") {
+  scoreGoal = 500;
+}
+
+if (selectedBlind === "big") {
+  scoreGoal = 1000;
+}
+
+if (selectedBlind === "boss") {
+  scoreGoal = 2000;
+}
+
+if (currentHands === 0 && score < scoreGoal) 
+
+if (selectedBlind === "small") {
+  menuTitle.textContent = `Small Blind — Goal: ${scoreGoal}`;
+}
+if (selectedBlind === "big") {
+  menuTitle.textContent = `Big Blind — Goal: ${scoreGoal}`;
+}
+if (selectedBlind === "boss") {
+  menuTitle.textContent = `Boss Blind — Goal: ${scoreGoal}`;
+}
+
 // hand info and score at top
 const handInfo = document.createElement("div");
 handInfo.style.position = "fixed";
@@ -107,7 +138,7 @@ document.body.appendChild(handInfo);
 function showHandPopup(handType, baseScore, cardSum) {
   handInfo.innerHTML = `${handType.toUpperCase()}<br>${baseScore} + ${cardSum}`;
   handInfo.style.display = "block";
-  setTimeout(() => (handInfo.style.display = "none"), 3000);
+  setTimeout(() => (handInfo.style.display = "none"), 2000);
 }
 
 function getCardRank(card) {
@@ -225,7 +256,24 @@ playButton.addEventListener("click", () => {
     currentHands--;
     const totalScore = calculateHandScore(selectedCards);
     playerScore += totalScore;
-    updateMenu();
+      updateMenu();
+      
+      if (currentHands === 0 && playerScore < scoreGoal) {
+        setTimeout(() => {
+          window.location.href = "blind.html";
+        }, 1500);
+        return; // stop further play logic
+      }
+      
+      if (playerScore >= scoreGoal) {
+        // mark this blind as defeated
+        localStorage.setItem("defeatedBlind", selectedBlind);
+
+        // wait 3 seconds before redirecting to shop
+        setTimeout(() => {
+          window.location.href = "shop.html";
+        }, 1900);
+      }
 
     playArea.innerHTML = "";
     const cardsPlayedCount = selectedCards.length;
@@ -253,7 +301,7 @@ playButton.addEventListener("click", () => {
       hand.sort((a, b) => getCardRank(b) - getCardRank(a)); // sort descending
       handContainer.innerHTML = ""; // re-render hand
       hand.forEach(renderCard);
-    }, 3000);
+    }, 2000);
   }
 });
 
@@ -281,6 +329,6 @@ discardButton.addEventListener("click", () => {
       hand.sort((a, b) => getCardRank(b) - getCardRank(a));
       handContainer.innerHTML = "";
       hand.forEach(renderCard);
-    }, 3000);
+    }, 1000);
   }
 });

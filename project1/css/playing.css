@@ -41,7 +41,7 @@
 
 /* selected state */
 .card.selected {
-    margin-bottom: 70px;
+    margin-bottom: 90px;
     /* lift card up when selected */
     transform: scale(1.15);
     /* slight scale for emphasis */

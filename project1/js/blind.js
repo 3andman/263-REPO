@@ -36,8 +36,24 @@ const bigBlindButton = document.getElementById("big-blind-button");
 const bossBlindButton = document.getElementById("boss-blind-button");
 
 // lock higher blinds at start
+smallBlindButton.disabled = false;
 bigBlindButton.disabled = true;
 bossBlindButton.disabled = true;
+
+const defeatedBlind = localStorage.getItem("defeatedBlind");
+
+// pregression system!!!!
+
+if (defeatedBlind === "small") {
+    bigBlindButton.disabled = false; // unlock big blind
+    smallBlindButton.disabled = true; // lock small blind
+}
+
+if (defeatedBlind === "big") {
+  bossBlindButton.disabled = false; // unlock boss blind
+  bigBlindButton.disabled = true; // lock big blind
+  smallBlindButton.disabled = true; // lock small blind still
+}
 
 smallBlindButton.addEventListener("click", () => {
   localStorage.setItem("selectedBlind", "small");
@@ -53,3 +69,4 @@ bossBlindButton.addEventListener("click", () => {
   localStorage.setItem("selectedBlind", "boss");
   window.location.href = "playing.html";
 });
+

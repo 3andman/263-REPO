@@ -1,8 +1,12 @@
-
+// find the start button
 const startButton = document.querySelector(".start-button");
-// add click event listener to the button
+
+// add click event listener
 startButton.addEventListener("click", () => {
-  // when clicked, navigate to the blind selector screen
+  // reset saved blind progress
+  localStorage.removeItem("defeatedBlind");
+  localStorage.removeItem("selectedBlind");
+
+  // navigate to blind select screen
   window.location.href = "blind.html";
-  /* changes the browser's URL to blind.html, effectively moving the user to that page */
 });
