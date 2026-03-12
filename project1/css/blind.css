@@ -69,3 +69,8 @@
     font-size: 1.2rem;
     /* smaller readable font */
 }
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

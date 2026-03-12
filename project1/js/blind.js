@@ -1,8 +1,8 @@
-
 // game state variables
 let playerScore = 0; // player's current score
 let currentHands = 4; // number of hands remaining
 let discardsCount = 3; // number of discards left
+let currentBlind = "";
 
 // select all blind buttons on the page
 const blindButtons = document.querySelectorAll(".blind-button");
@@ -27,3 +27,29 @@ function updateMenu() {
 
 // call updateMenu once at the start to display initial values
 updateMenu();
+
+const blindScreen = document.getElementById("blind-select-screen");
+const gameScreen = document.getElementById("game-screen");
+
+const smallBlindButton = document.getElementById("small-blind-button");
+const bigBlindButton = document.getElementById("big-blind-button");
+const bossBlindButton = document.getElementById("boss-blind-button");
+
+// lock higher blinds at start
+bigBlindButton.disabled = true;
+bossBlindButton.disabled = true;
+
+smallBlindButton.addEventListener("click", () => {
+  localStorage.setItem("selectedBlind", "small");
+  window.location.href = "playing.html";
+});
+
+bigBlindButton.addEventListener("click", () => {
+  localStorage.setItem("selectedBlind", "big");
+  window.location.href = "playing.html";
+});
+
+bossBlindButton.addEventListener("click", () => {
+  localStorage.setItem("selectedBlind", "boss");
+  window.location.href = "playing.html";
+});

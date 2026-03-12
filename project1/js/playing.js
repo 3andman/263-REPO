@@ -85,7 +85,7 @@ let selectedCards = [];
 
 // Deal initial hand
 let hand = deck.splice(0, 10);
-hand.sort((a, b) => getCardValue(b) - getCardValue(a)); // sort descending
+hand.sort((a, b) => getCardRank(b) - getCardRank(a)); // sort descending
 
 // dom containers
 const handContainer = document.querySelector(".hand-container"); // hand of cards
@@ -110,11 +110,24 @@ function showHandPopup(handType, baseScore, cardSum) {
   setTimeout(() => (handInfo.style.display = "none"), 3000);
 }
 
-// get numerical value of special cards
-function getCardValue(card) {
+function getCardRank(card) {
   const rank = card.slice(0, -1);
+
+  if (rank === "A") return 14;
+  if (rank === "K") return 13;
+  if (rank === "Q") return 12;
+  if (rank === "J") return 11;
+
+  return parseInt(rank);
+}
+
+// get numerical value of a card
+function getCardScore(card) {
+  const rank = card.slice(0, -1);
+
   if (rank === "A") return 11;
-  if (rank === "J","Q","K") return 10;
+  if (rank === "J" || rank === "Q" || rank === "K") return 10;
+
   return parseInt(rank);
 }
 
@@ -147,14 +160,14 @@ hand.forEach(renderCard);
 
 // helper: sum values of selected cards
 function sumCardValues(cards) {
-  return cards.reduce((total, card) => total + getCardValue(card), 0);
+  return cards.reduce((total, card) => total + getCardRank(card), 0);
 }
 
 // detect hand type
 function detectHand(cards) {
   const ranks = cards.map((c) => c.slice(0, -1));
   const suits = cards.map((c) => c.slice(-1));
-  const values = cards.map(getCardValue).sort((a, b) => a - b);
+  const values = cards.map(getCardRank).sort((a, b) => a - b);
 
   const counts = {};
   ranks.forEach((r) => {
@@ -237,7 +250,7 @@ playButton.addEventListener("click", () => {
       playArea.innerHTML = "";
       const newCards = deck.splice(0, cardsPlayedCount);
       hand = hand.concat(newCards); // add to hand
-      hand.sort((a, b) => getCardValue(b) - getCardValue(a)); // sort descending
+      hand.sort((a, b) => getCardRank(b) - getCardRank(a)); // sort descending
       handContainer.innerHTML = ""; // re-render hand
       hand.forEach(renderCard);
     }, 3000);
@@ -265,7 +278,7 @@ discardButton.addEventListener("click", () => {
     setTimeout(() => {
       const newCards = deck.splice(0, cardsDiscardedCount);
       hand = hand.concat(newCards);
-      hand.sort((a, b) => getCardValue(b) - getCardValue(a));
+      hand.sort((a, b) => getCardRank(b) - getCardRank(a));
       handContainer.innerHTML = "";
       hand.forEach(renderCard);
     }, 3000);
