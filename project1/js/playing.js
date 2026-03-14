@@ -1,3 +1,7 @@
+
+// get the joker abilities in game
+import { jokers } from "./jokers.js";
+
 // Game state variables
 let playerScore = 0; // player's current score
 let currentHands = 4; // number of hands remaining
@@ -110,11 +114,10 @@ if (selectedBlind === "boss") {
   scoreGoal = 2000;
 }
 
-if (currentHands === 0 && score < scoreGoal) 
-
-if (selectedBlind === "small") {
-  menuTitle.textContent = `Small Blind — Goal: ${scoreGoal}`;
-}
+if (currentHands === 0 && score < scoreGoal)
+  if (selectedBlind === "small") {
+    menuTitle.textContent = `Small Blind — Goal: ${scoreGoal}`;
+  }
 if (selectedBlind === "big") {
   menuTitle.textContent = `Big Blind — Goal: ${scoreGoal}`;
 }
@@ -256,24 +259,24 @@ playButton.addEventListener("click", () => {
     currentHands--;
     const totalScore = calculateHandScore(selectedCards);
     playerScore += totalScore;
-      updateMenu();
-      
-      if (currentHands === 0 && playerScore < scoreGoal) {
-        setTimeout(() => {
-          window.location.href = "blind.html";
-        }, 1500);
-        return; // stop further play logic
-      }
-      
-      if (playerScore >= scoreGoal) {
-        // mark this blind as defeated
-        localStorage.setItem("defeatedBlind", selectedBlind);
+    updateMenu();
 
-        // wait 3 seconds before redirecting to shop
-        setTimeout(() => {
-          window.location.href = "shop.html";
-        }, 1900);
-      }
+    if (currentHands === 0 && playerScore < scoreGoal) {
+      setTimeout(() => {
+        window.location.href = "blind.html";
+      }, 1500);
+      return; // stop further play logic
+    }
+
+    if (playerScore >= scoreGoal) {
+      // mark this blind as defeated
+      localStorage.setItem("defeatedBlind", selectedBlind);
+
+      // wait 3 seconds before redirecting to shop
+      setTimeout(() => {
+        window.location.href = "shop.html";
+      }, 1900);
+    }
 
     playArea.innerHTML = "";
     const cardsPlayedCount = selectedCards.length;
