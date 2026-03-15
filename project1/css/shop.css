@@ -14,7 +14,7 @@
     color: white;
 }
 
-/* Select Joker text ~80% down the screen */
+/* Select Joker text */
 .shop-message {
     position: absolute;
     top: 30%;
@@ -24,7 +24,7 @@
     color: white;
 }
 
-/* Button at bottom */
+/* Next Button at bottom */
 .next-blind-button {
     position: absolute;
     bottom: 5%;
@@ -33,4 +33,31 @@
     padding: 15px 40px;
     font-size: 1.5rem;
     cursor: pointer;
+}
+
+/* joker container */
+.joker-row {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 60px;
+}
+
+/* individual joker card */
+.joker-card {
+    width: 220px;
+    padding: 20px;
+    text-align: center;
+
+    background: #222;
+    border-radius: 12px;
+}
+
+/* take button */
+.joker-card button {
+    margin-top: 10px;
+    padding: 10px 16px;
 }

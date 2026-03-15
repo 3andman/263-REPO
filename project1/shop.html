@@ -11,19 +11,36 @@
 
 <body>
 
-    <div class="shop-container">
+<div class="shop-container">
 
-        <h1 class="shop-title">BLIND DEFEATED!</h1>
+    <h1 class="shop-title">BLIND DEFEATED!</h1>
 
-        <div class="shop-message">
-            SELECT A JOKER
+    <div class="shop-message">
+        SELECT A JOKER
+    </div>
+
+    <!-- jokers -->
+    <div class="joker-row">
+        <div class="joker-card">
+            <img id="joker1-img" class="joker-image">
+            <div id="joker1-name" class="joker-title"></div>
+            <div id="joker1-desc" class="joker-desc"></div>
+            <button id="joker1-btn">Take</button>
         </div>
 
-        <button id="next-blind-button" class="next-blind-button">
-            NEXT BLIND
-        </button>
-
+        <div class="joker-card">
+            <img id="joker2-img" class="joker-image">
+            <div id="joker2-name" class="joker-title"></div>
+            <div id="joker2-desc" class="joker-desc"></div>
+            <button id="joker2-btn">Take</button>
+        </div>
     </div>
+
+    <button id="next-blind-button" class="next-blind-button">
+        NEXT BLIND
+    </button>
+
+</div>
 
     <script src="js/shop.js"></script>
 

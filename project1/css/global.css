@@ -212,3 +212,26 @@ button {
     transform: translateY(-2px);
     /* slight lift */
 }
+
+.joker-card {
+    width: 220px;
+    padding: 20px;
+    text-align: center;
+    background: #222;
+    border-radius: 12px;
+}
+
+.joker-image {
+    width: 160px;
+    height: auto;
+}
+
+.joker-title {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.joker-desc {
+    font-size: 0.9rem;
+    margin-top: 6px;
+}
