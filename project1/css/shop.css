@@ -25,7 +25,7 @@
 }
 
 /* Next Button at bottom */
-.next-blind-button {
+#next-blind-button {
     position: absolute;
     bottom: 5%;
     left: 50%;

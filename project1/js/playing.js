@@ -1,6 +1,6 @@
 
-// get the joker abilities in game
-import { jokers } from "./jokers.js";
+//  get the joker abilities in game
+// import { jokers } from "./jokers.js";
 
 // Game state variables
 let playerScore = 0; // player's current score
@@ -198,6 +198,11 @@ function sumCardValues(cards) {
 }
 
 // detect hand type
+// splits played cards into ranks and suits
+// counts duplicates of either
+// turns them into occurances
+// checks for patters
+// flush and straights need their own function
 function detectHand(cards) {
   const ranks = cards.map((c) => c.slice(0, -1));
   const suits = cards.map((c) => c.slice(-1));
@@ -212,18 +217,23 @@ function detectHand(cards) {
   const isFlush = suits.length >= 5 && suits.every((s) => s === suits[0]);
   const isStraight =
     values.length >= 5 &&
-    values.every((v, i, a) => i === 0 || v === a[i - 1] + 1);
-
+      values.every((v, i, a) => i === 0 || v === a[i - 1] + 1);
+    
+    // checks top to bottom so if it finds one it stops
+    
+  if (isFlush && isStraight) return "straightFlush";
   if (occurrences.includes(4)) return "fourKind";
   if (occurrences.includes(3) && occurrences.includes(2)) return "fullHouse";
   if (isFlush) return "flush";
   if (isStraight) return "straight";
   if (occurrences.includes(3)) return "threeKind";
 
+    // 2 occurances = pair
   const pairs = occurrences.filter((v) => v === 2).length;
   if (pairs === 2) return "twoPair";
   if (pairs === 1) return "pair";
 
+    // no hand detected = else is high card
   return "highCard";
 }
 
@@ -237,6 +247,8 @@ const handScores = {
   flush: 140,
   fullHouse: 160,
   fourKind: 280,
+  straightFlush: 400
+  
 };
 
 // calculate hand score
@@ -244,11 +256,8 @@ function calculateHandScore(cards) {
   const handType = detectHand(cards);
   const baseScore = handScores[handType];
   const cardSum = sumCardValues(cards);
-  const total = baseScore + cardSum;
-
-  console.log("Hand:", handType, "Sum:", cardSum, "Total:", total);
-  showHandPopup(handType, baseScore, cardSum);
-
+    const total = baseScore + cardSum;
+    
   return total;
 }
 
@@ -278,22 +287,28 @@ playButton.addEventListener("click", () => {
       }, 1900);
     }
 
+      // clear area and count how many cards played
     playArea.innerHTML = "";
     const cardsPlayedCount = selectedCards.length;
 
-    // remove played cards from hand
+    // find and remove played cards from hand
     selectedCards.forEach((card) => {
       const cardImg = document.querySelector(
         `.hand-container img[src='assets/images/cards/${card}.png']`,
       );
-      if (cardImg) handContainer.removeChild(cardImg);
-      hand = hand.filter((c) => c !== card); // remove from hand array
+        // remove visually
+        if (cardImg) handContainer.removeChild(cardImg);
+        // remove data
+        hand = hand.filter((c) => c !== card); // remove from hand array
+        
+        // show in play area
       const img = document.createElement("img");
       img.src = `assets/images/cards/${card}.png`;
       img.className = "card-played";
       playArea.appendChild(img);
     });
 
+      // clear
     selectedCards = [];
 
     // draw new cards

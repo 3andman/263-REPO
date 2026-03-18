@@ -42,3 +42,9 @@ document.getElementById("joker2-btn").addEventListener("click", () => {
   localStorage.setItem("activeJokers", JSON.stringify(activeJokers));
   window.location.href = "blind.html";
 });
+
+const nextButton = document.getElementById("next-blind-button");
+
+nextButton.addEventListener("click", () => {
+  window.location.href = "blind.html";
+});
