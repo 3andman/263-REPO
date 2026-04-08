@@ -1,0 +1,76 @@
+/* blind selector container */
+.blind-container {
+    display: flex;
+    /* arrange blind slots horizontally */
+    justify-content: space-around;
+    /* space slots evenly across container */
+    align-items: flex-end;
+    /* align slots to bottom of container */
+    height: 100vh;
+    /* full viewport height */
+    padding: 0 5%;
+    /* horizontal padding inside container */
+    gap: 20px;
+    /* space between each blind slot */
+    margin-left: 22%;
+    /* offset container to the right to avoid menu bar */
+}
+
+/* each individual blind slot rectangle */
+.blind-slot {
+    display: flex;
+    flex-direction: column;
+    /* stack button on top, info below */
+    justify-content: flex-start;
+    /* button stays at top of slot */
+    align-items: center;
+    /* center horizontally */
+    height: 80%;
+    /* vertical height of slot relative to container */
+    width: 30%;
+    /* slot width relative to container */
+    background-color: rgb(57, 57, 57);
+    border-radius: 12px;
+    /* rounded corners for nicer visuals */
+    padding-top: 20px;
+    /* spacing above the button */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    /* subtle shadow for depth */
+}
+
+/* blind button at top of slot */
+.blind-button {
+    padding: 20px 40px;
+    /* chunky clickable button */
+    border-radius: 180px;
+    width: 270px;
+    height: 270px;
+    font-size: 2rem;
+    /* readable pixel font size */
+    background-color: rgb(181, 104, 94);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    /* smooth hover transition */
+}
+
+.blind-button:hover {
+    background-color: rgb(126, 75, 68);
+    /* swap color when hovered */
+}
+
+/* info text below button */
+.blind-info {
+    margin-top: auto;
+    /* push info to bottom of slot */
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-size: 1.2rem;
+    /* smaller readable font */
+}
+
+button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}

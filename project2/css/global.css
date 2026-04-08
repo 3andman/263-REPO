@@ -1,0 +1,237 @@
+/* import pixel font from google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* using Press Start 2P to give the game a retro pixel feel */
+
+/* set global font variable */
+:root {
+    --pixel-font: 'Press Start 2P', cursive;
+    /* assign pixel font to a variable for easy reuse */
+}
+
+/* reset body defaults and apply global styles */
+body {
+    font-family: var(--pixel-font);
+    /* use global pixel font */
+    color: #333;
+    /* fallback text color */
+    background-color: white;
+    /* background color */
+    background-image: url('../assets/images/main-bkg.jpg');
+    /* global background image */
+    background-size: cover;
+    /* make background cover the entire viewport */
+    background-position: center;
+    /* center background image */
+    background-repeat: no-repeat;
+    /* prevent background from tiling */
+}
+
+/* headings weight */
+h1,
+h2,
+h3 {
+    font-weight: 700;
+    /* bold headings */
+}
+
+/* universal box sizing and reset */
+* {
+    margin: 0;
+    /* remove default margin */
+    padding: 0;
+    /* remove default padding */
+    box-sizing: border-box;
+    /* padding border in element width and height */
+}
+
+/* base button styling */
+button {
+    font-family: inherit;
+    /* inherit font from parent */
+    cursor: pointer;
+    /* pointer cursor to indicate clickable */
+    border-radius: 8px;
+    /* rounded corners */
+    border: none;
+    /* remove default border */
+    transition: background-color 0.2s;
+    /* smooth color transition on hover */
+}
+
+/* flex container for common layout */
+.container {
+    display: flex;
+    /* use flexbox */
+    flex-direction: column;
+    /* stack child elements vertically */
+    align-items: center;
+    /* center horizontally */
+    justify-content: center;
+    /* center vertically */
+    text-align: center;
+}
+
+
+/* menu bar container */
+#menu-bar {
+    position: absolute;
+    /* position relative to viewport */
+    width: 20%;
+    /* menu takes 20% of viewport width */
+    height: 100vh;
+    /* full viewport height */
+    display: flex;
+    /* flex layout for inner sections */
+    flex-direction: column;
+    /* stack top and bottom areas */
+    justify-content: flex-start;
+    /* align children at top */
+    background-color: rgb(39, 38, 38);
+    /* dark background for contrast */
+    padding: 20px;
+    /* inner spacing */
+}
+
+/* top area for title */
+#menu-bar .menu-top {
+    flex: 0 0 30%;
+    display: flex;
+    justify-content: center;
+    /* center title horizontally */
+    align-items: center;
+    /* center title vertically */
+    text-align: center;
+    color: white;
+    /* title text color */
+}
+
+/* menu stat boxes */
+#menu-bar .menu-bottom p {
+    margin: 15px 0;
+    background-color: #52b788;
+    /* same theme color as buttons */
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 2.4rem;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    margin-bottom: 60px;
+    height: 150px;
+}
+
+
+/* stat sections */
+.menu-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+/* label above square */
+.menu-label {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+/* square box */
+.menu-square {
+    width: 350px;
+    height: 300px;
+    background-color: #9edc84;
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 6rem;
+    color: white;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* score rectangle */
+.menu-rectangle {
+    width: 430px;
+    height: 120px;
+
+    background-color: #52b788;
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 4rem;
+    color: white;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* 
+   back button
+*/
+.back-button {
+    position: fixed;
+    /* fixed position */
+    top: 18px;
+    /* from top */
+    left: 18px;
+    /* from left */
+    z-index: 9999;
+    /* above everything */
+
+    text-decoration: none;
+    /* remove underline */
+    font-family: "PortFont", monospace;
+    /* font */
+    font-size: 25px;
+    /* text size */
+    color: rgba(255, 255, 255, 0.85);
+    /* text color */
+
+    background: rgba(255, 255, 255, 0.08);
+    /* button background */
+    padding: 10px 14px;
+    /* inner spacing */
+    border-radius: 12px;
+    /* rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    /* border color */
+
+    transition: background 150ms ease, transform 150ms ease;
+    /* smooth hover */
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    /* hover background */
+    transform: translateY(-2px);
+    /* slight lift */
+}
+
+.joker-card {
+    width: 220px;
+    padding: 20px;
+    text-align: center;
+    background: #222;
+    border-radius: 12px;
+}
+
+.joker-image {
+    width: 160px;
+    height: auto;
+}
+
+.joker-title {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.joker-desc {
+    font-size: 0.9rem;
+    margin-top: 6px;
+}

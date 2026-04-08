@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!-- html5 doctype declaration -->
+
+<html lang="en">
+<!-- set language to english -->
+
+    <!-- back button to homepage -->
+    <a href="start.html" class="back-button">← Back to Start Screen</a>
+
+
+<head>
+    <meta charset="UTF-8">
+    <!-- set character encoding to utf-8 -->
+
+    <title>Blind Screen</title>
+    <!-- page title shown in browser tab -->
+
+    <!-- link to global styles -->
+    <link rel="stylesheet" href="css/global.css">
+
+    <!-- link to blind screen specific styles -->
+    <link rel="stylesheet" href="css/blind.css">
+</head>
+
+
+
+<body>
+    <!-- menu bar container -->
+    <div id="menu-bar">
+
+        <!-- top section of menu for game title -->
+        <div class="menu-top">
+            <h2 id="menu-title">Choose Your Blind</h2>
+        </div>
+
+        <!-- bottom section of menu for game info -->
+        <div class="menu-bottom">
+
+            <!-- score box -->
+<div class="menu-stat">
+    <div class="menu-label">SCORE</div>
+    <div class="menu-rectangle">
+        <span id="menu-score">0</span>
+    </div>
+</div>
+
+            <!-- hands section -->
+            <div class="menu-stat">
+                <div class="menu-label">HANDS</div>
+                <div class="menu-square">
+                    <span id="menu-hands">4</span>
+                </div>
+            </div>
+
+            <!-- discards section -->
+            <div class="menu-stat">
+                <div class="menu-label">DISCARDS</div>
+                <div class="menu-square">
+                    <span id="menu-discards">3</span>
+                </div>
+            </div>
+
+        </div> <!-- end menu-bottom -->
+
+    </div> <!-- end menu-bar -->
+
+
+    <!-- container for blind selection slots -->
+    <div class="blind-container">
+
+        <div class="blind-slot">
+        <button class="blind-button" id="small-blind-button">Small Blind</button>
+            <div class="blind-info">info 1</div>
+        </div>
+
+        <div class="blind-slot">
+            <button class="blind-button" id="big-blind-button">Big Blind</button>
+            <div class="blind-info">info 2</div>
+        </div>
+
+        <div class="blind-slot">
+            <button class="blind-button" id="boss-blind-button">Boss Blind</button>
+            <div class="blind-info">info 3</div>
+        </div>
+
+    </div>
+
+    <script type="module" src="js/blind.js"></script>
+</body>
+
+</html>
