@@ -114,7 +114,7 @@ if (selectedBlind === "boss") {
   scoreGoal = 2000;
 }
 
-if (currentHands === 0 && score < scoreGoal)
+if (currentHands === 0 && playerScore < scoreGoal)
   if (selectedBlind === "small") {
     menuTitle.textContent = `Small Blind — Goal: ${scoreGoal}`;
   }
@@ -350,3 +350,5 @@ discardButton.addEventListener("click", () => {
     }, 1000);
   }
 });
+
+
