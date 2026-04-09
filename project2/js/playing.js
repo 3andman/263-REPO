@@ -84,11 +84,12 @@ function shuffle(array) {
 // shuffle the deck at the start
 shuffle(deck);
 
-// Selected cards tracker
-let selectedCards = [];
+// Selected cards tracker, phaser version
+window.selectedCards = [];
 
 // Deal initial hand
 let hand = deck.splice(0, 10);
+window.currentHand = hand;
 hand.sort((a, b) => getCardRank(b) - getCardRank(a)); // sort descending
 
 // dom containers
