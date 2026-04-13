@@ -4,7 +4,8 @@
 <html lang="en">
 <!-- set language to english -->
  
-
+    <!-- back button to homepage -->
+    <a href="blind.html" class="back-button">← Back to Blind Select</a>
 
 
 <head>
@@ -22,8 +23,6 @@
 </head>
 
 <body>
-        <!-- back button to homepage -->
-    <a href="blind.html" class="back-button">← Back to Blind Select</a>
 
     <!-- menu bar container -->
     <div id="menu-bar">
@@ -63,17 +62,12 @@
         </div> <!-- end menu-bottom -->
 
     </div> <!-- end menu-bar -->
-    
-    <!-- phaser test area -->
-    <div id="phaser-test"></div>
 
 
     <!-- main play area where played cards appear -->
     <div class="play-area">
         <!-- cards that are played will be dynamically added here -->
     </div>
-    
-    <div id="phaser-hand"></div>
 
     <!-- hand of cards container -->
     <div class="hand-container" id="hand-container">
@@ -92,14 +86,8 @@
 
     </div>
 
-<!-- phaser library -->
-<script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
-
-<!-- phaser test file -->
-<script src="js/phaser-test.js"></script>
-
-<!-- game -->
-<script type="module" src="js/playing.js"></script>
+    <!-- main playing screen javascript -->
+    <script type="module" src="js/playing.js"></script>
 
 </body>
 

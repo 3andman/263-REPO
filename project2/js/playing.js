@@ -84,12 +84,11 @@ function shuffle(array) {
 // shuffle the deck at the start
 shuffle(deck);
 
-// Selected cards tracker, phaser version
-window.selectedCards = [];
+// Selected cards tracker
+let selectedCards = [];
 
 // Deal initial hand
 let hand = deck.splice(0, 10);
-window.currentHand = hand;
 hand.sort((a, b) => getCardRank(b) - getCardRank(a)); // sort descending
 
 // dom containers
@@ -115,7 +114,7 @@ if (selectedBlind === "boss") {
   scoreGoal = 2000;
 }
 
-if (currentHands === 0 && playerScore < scoreGoal)
+if (currentHands === 0 && score < scoreGoal)
   if (selectedBlind === "small") {
     menuTitle.textContent = `Small Blind — Goal: ${scoreGoal}`;
   }
@@ -351,5 +350,3 @@ discardButton.addEventListener("click", () => {
     }, 1000);
   }
 });
-
-
