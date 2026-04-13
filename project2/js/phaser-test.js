@@ -4,7 +4,7 @@ const config = {
   width: 600,
   height: 250,
 
-  parent: "phaser-test",
+  parent: "phaser-hand",
 
   backgroundColor: "#003300",
 
@@ -62,12 +62,38 @@ function create() {
 function renderHand() {
   const hand = window.currentHand;
 
+  const spacing = 90;
+  const totalWidth = (hand.length - 1) * spacing;
+
+  // center hand horizontally
+  const startX = (600 - totalWidth) / 2;
+
   hand.forEach((card, index) => {
-    let x = 60 + index * 50;
+    let x = startX + index * spacing;
     let y = 150;
 
     let sprite = this.add.image(x, y, card);
 
     sprite.setScale(0.3);
+
+    sprite.setInteractive();
+
+    sprite.selected = false;
+
+    sprite.on("pointerdown", () => {
+      if (sprite.selected) {
+        sprite.y += 30;
+        sprite.selected = false;
+
+        window.selectedCards = window.selectedCards.filter((c) => c !== card);
+      } else {
+        if (window.selectedCards.length < 5) {
+          sprite.y -= 30;
+          sprite.selected = true;
+
+          window.selectedCards.push(card);
+        }
+      }
+    });
   });
 }

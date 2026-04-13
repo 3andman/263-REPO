@@ -137,3 +137,21 @@
 
     z-index: 5;
 }
+
+#phaser-hand {
+
+    position: absolute;
+
+    bottom: 250px;
+
+    left: 22%;
+
+    width: 78%;
+
+    height: 300px;
+
+    border: 2px solid blue;
+
+    z-index: 5;
+
+}
