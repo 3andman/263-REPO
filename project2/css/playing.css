@@ -20,7 +20,7 @@
 
 /* base style for individual card */
 .card {
-    width: 250px;
+    width: 200px;
     /* fixed width for each card */
     margin-left: -90px;
     /* negative margin to overlap cards for curved hand */
@@ -96,12 +96,12 @@
 }
 
 /* play hand button colors */
-.play-hand-button {background-color: #eaa7d8;}
-.play-hand-button:hover {background-color: #d68dc3;}
+.play-hand-button {background-color: rgb(217, 194, 163);}
+.play-hand-button:hover {background-color: rgb(199, 176, 149);}
 
 /* discard button colors */
-.discard-button {background-color: #9edc84;}
-.discard-button:hover {background-color: #81b36c;}
+.discard-button {background-color: rgb(217, 194, 163);}
+.discard-button:hover {background-color: rgb(199, 176, 149);}
 
 /* area where played cards appear */
 .play-area {

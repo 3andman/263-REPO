@@ -76,7 +76,7 @@ button {
 #menu-bar {
     position: absolute;
     /* position relative to viewport */
-    width: 20%;
+    width: 21.1%;
     /* menu takes 20% of viewport width */
     height: 100vh;
     /* full viewport height */
@@ -101,6 +101,7 @@ button {
     align-items: center;
     /* center title vertically */
     text-align: center;
+    font-size: 2.5rem;
     color: white;
     /* title text color */
 }

@@ -1,11 +1,25 @@
+const activeJokers = JSON.parse(localStorage.getItem("activeJokers")) || [];
 
-//  get the joker abilities in game
-// import { jokers } from "./jokers.js";
+// GAME STATE
+let gameState = {
+  playerScore: 0,
+  currentHands: 4,
+  discardsCount: 3,
+  startingHandSize: 10,
+  doubleFaceCards: false,
+  doubleAtZeroDiscards: false,
+  extraHands: 0,
+  noDiscards: false,
+  colorBlind: false,
+  discardScoreBonus: 0,
+  doubleSmallHands: false,
+  handSize: 10,
+};
 
-// Game state variables
-let playerScore = 0; // player's current score
-let currentHands = 4; // number of hands remaining
-let discardsCount = 3; // number of discards left
+// APPLY JOKERS
+activeJokers.forEach((joker) => {
+  if (joker.apply) joker.apply(gameState);
+});
 
 // Full deck of 52 cards
 let deck = [
@@ -65,9 +79,10 @@ let deck = [
 
 // update menu display
 function updateMenu() {
-  document.getElementById("menu-score").textContent = playerScore;
-  document.getElementById("menu-hands").textContent = currentHands;
-  document.getElementById("menu-discards").textContent = discardsCount;
+  document.getElementById("menu-score").textContent = gameState.playerScore;
+  document.getElementById("menu-hands").textContent = gameState.currentHands;
+  document.getElementById("menu-discards").textContent =
+    gameState.discardsCount;
 }
 
 // call once at start to show initial values
@@ -88,7 +103,7 @@ shuffle(deck);
 let selectedCards = [];
 
 // Deal initial hand
-let hand = deck.splice(0, 10);
+let hand = deck.splice(0, gameState.startingHandSize);
 hand.sort((a, b) => getCardRank(b) - getCardRank(a)); // sort descending
 
 // dom containers
@@ -114,7 +129,7 @@ if (selectedBlind === "boss") {
   scoreGoal = 2000;
 }
 
-if (currentHands === 0 && score < scoreGoal)
+if (gameState.currentHands === 0 && gameState.playerScore < scoreGoal)
   if (selectedBlind === "small") {
     menuTitle.textContent = `Small Blind — Goal: ${scoreGoal}`;
   }
@@ -217,10 +232,10 @@ function detectHand(cards) {
   const isFlush = suits.length >= 5 && suits.every((s) => s === suits[0]);
   const isStraight =
     values.length >= 5 &&
-      values.every((v, i, a) => i === 0 || v === a[i - 1] + 1);
-    
-    // checks top to bottom so if it finds one it stops
-    
+    values.every((v, i, a) => i === 0 || v === a[i - 1] + 1);
+
+  // checks top to bottom so if it finds one it stops
+
   if (isFlush && isStraight) return "straightFlush";
   if (occurrences.includes(4)) return "fourKind";
   if (occurrences.includes(3) && occurrences.includes(2)) return "fullHouse";
@@ -228,12 +243,12 @@ function detectHand(cards) {
   if (isStraight) return "straight";
   if (occurrences.includes(3)) return "threeKind";
 
-    // 2 occurances = pair
+  // 2 occurances = pair
   const pairs = occurrences.filter((v) => v === 2).length;
   if (pairs === 2) return "twoPair";
   if (pairs === 1) return "pair";
 
-    // no hand detected = else is high card
+  // no hand detected = else is high card
   return "highCard";
 }
 
@@ -247,8 +262,7 @@ const handScores = {
   flush: 140,
   fullHouse: 160,
   fourKind: 280,
-  straightFlush: 400
-  
+  straightFlush: 400,
 };
 
 // calculate hand score
@@ -256,28 +270,28 @@ function calculateHandScore(cards) {
   const handType = detectHand(cards);
   const baseScore = handScores[handType];
   const cardSum = sumCardValues(cards);
-    const total = baseScore + cardSum;
-    
+  const total = baseScore + cardSum;
+
   return total;
 }
 
 // Play hand button
 const playButton = document.querySelector(".play-hand-button");
 playButton.addEventListener("click", () => {
-  if (currentHands > 0 && selectedCards.length > 0) {
-    currentHands--;
+  if (gameState.currentHands > 0 && selectedCards.length > 0) {
+    gameState.currentHands--;
     const totalScore = calculateHandScore(selectedCards);
-    playerScore += totalScore;
+    gameState.playerScore += totalScore;
     updateMenu();
 
-    if (currentHands === 0 && playerScore < scoreGoal) {
+    if (gameState.currentHands === 0 && gameState.playerScore < scoreGoal) {
       setTimeout(() => {
         window.location.href = "blind.html";
       }, 1500);
       return; // stop further play logic
     }
 
-    if (playerScore >= scoreGoal) {
+    if (gameState.playerScore >= scoreGoal) {
       // mark this blind as defeated
       localStorage.setItem("defeatedBlind", selectedBlind);
 
@@ -287,7 +301,7 @@ playButton.addEventListener("click", () => {
       }, 1900);
     }
 
-      // clear area and count how many cards played
+    // clear area and count how many cards played
     playArea.innerHTML = "";
     const cardsPlayedCount = selectedCards.length;
 
@@ -296,19 +310,19 @@ playButton.addEventListener("click", () => {
       const cardImg = document.querySelector(
         `.hand-container img[src='assets/images/cards/${card}.png']`,
       );
-        // remove visually
-        if (cardImg) handContainer.removeChild(cardImg);
-        // remove data
-        hand = hand.filter((c) => c !== card); // remove from hand array
-        
-        // show in play area
+      // remove visually
+      if (cardImg) handContainer.removeChild(cardImg);
+      // remove data
+      hand = hand.filter((c) => c !== card); // remove from hand array
+
+      // show in play area
       const img = document.createElement("img");
       img.src = `assets/images/cards/${card}.png`;
       img.className = "card-played";
       playArea.appendChild(img);
     });
 
-      // clear
+    // clear
     selectedCards = [];
 
     // draw new cards
@@ -326,9 +340,9 @@ playButton.addEventListener("click", () => {
 // discard button
 const discardButton = document.querySelector(".discard-button");
 discardButton.addEventListener("click", () => {
-  if (discardsCount > 0 && selectedCards.length > 0) {
+  if (gameState.discardsCount > 0 && selectedCards.length > 0) {
     const cardsDiscardedCount = selectedCards.length;
-    discardsCount--;
+    gameState.discardsCount--;
     updateMenu();
 
     selectedCards.forEach((card) => {

@@ -1,7 +1,9 @@
 import { jokers } from "./jokers.js";
+import { addJoker, getState } from "./state.js";
 
-// load player jokers
-let activeJokers = JSON.parse(localStorage.getItem("activeJokers")) || [];
+// load player jokers from central state
+const state = getState();
+let activeJokers = state.jokers || [];
 
 // shuffle function
 function shuffle(array) {
@@ -15,11 +17,7 @@ function shuffle(array) {
 const ownedIds = activeJokers.map((j) => j.id);
 const jokerPool = jokers.filter((j) => !ownedIds.includes(j.id));
 
-shuffle(jokerPool);
-
-// take first two
-const joker1 = jokerPool[0];
-const joker2 = jokerPool[1] || jokerPool[0]; // if only one left
+const [joker1, joker2] = _.sampleSize(jokerPool, 2);
 
 // fill UI
 document.getElementById("joker1-img").src = joker1.image;
@@ -30,21 +28,19 @@ document.getElementById("joker2-img").src = joker2.image;
 document.getElementById("joker2-name").textContent = joker2.name;
 document.getElementById("joker2-desc").textContent = joker2.description;
 
-// select joker
+// select joker 1
 document.getElementById("joker1-btn").addEventListener("click", () => {
-  activeJokers.push(joker1);
-  localStorage.setItem("activeJokers", JSON.stringify(activeJokers));
+  addJoker(joker1);
   window.location.href = "blind.html";
 });
 
+// select joker 2
 document.getElementById("joker2-btn").addEventListener("click", () => {
-  activeJokers.push(joker2);
-  localStorage.setItem("activeJokers", JSON.stringify(activeJokers));
+  addJoker(joker2);
   window.location.href = "blind.html";
 });
 
-const nextButton = document.getElementById("next-blind-button");
-
-nextButton.addEventListener("click", () => {
+// skip shop
+document.getElementById("next-blind-button").addEventListener("click", () => {
   window.location.href = "blind.html";
 });

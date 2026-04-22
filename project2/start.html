@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>balatro start</title>
+    <title>game start</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/start.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -13,7 +13,23 @@
 <body>
     <div class="container start-screen">
         <!-- title in the middle -->
-        <h1 class="game-title">IDontKow</h1>
+<h1 class="game-title">
+
+    <!-- high pngs -->
+    <div class="high-word">
+
+        <img src="assets/images/cards/HH.png" class="title-letter">
+        <img src="assets/images/cards/IC.png" class="title-letter">
+        <img src="assets/images/cards/GC.png" class="title-letter">
+        <img src="assets/images/cards/HS.png" class="title-letter">
+
+    </div>
+
+    <div class="stakes-word">
+        STAKES
+    </div>
+
+</h1>
 
         <!-- buttons container -->
         <div class="button-group">
@@ -21,7 +37,14 @@
             <button class="start-button">START</button>
 
             <!-- instructions button -->
-            <button class="instructions-button">GUIDE</button>
+<button id="guide-button">Guide</button>
+
+<!-- popup -->
+<div id="guide-popup" class="hidden">
+
+    <div id="guide-content">
+        <span id="close-guide">&times;</span>
+        <img id="guide-image" src="assets/images/guide.png" alt="Game Guide">
         </div>
     </div>
     
