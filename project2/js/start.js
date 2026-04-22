@@ -4,6 +4,8 @@ const guideButton = document.getElementById("guide-button");
 const guidePopup = document.getElementById("guide-popup");
 const closeGuide = document.getElementById("close-guide");
 
+const music = document.getElementById("bg-music");
+
 // add click event listener
 startButton.addEventListener("click", () => {
   // reset saved blind progress
@@ -36,3 +38,14 @@ document.addEventListener("keydown", (e) => {
     guidePopup.classList.add("hidden");
   }
 });
+
+// try autoplay
+music.volume = 0.4;
+
+document.addEventListener(
+  "click",
+  () => {
+    music.play().catch(() => {});
+  },
+  { once: true },
+);

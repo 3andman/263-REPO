@@ -16,6 +16,18 @@ let gameState = {
   handSize: 10,
 };
 
+const music = document.getElementById("bg-music");
+
+music.volume = 0.4;
+
+document.addEventListener(
+  "click",
+  () => {
+    music.play().catch(() => {});
+  },
+  { once: true },
+);
+
 // APPLY JOKERS
 activeJokers.forEach((joker) => {
   if (joker.apply) joker.apply(gameState);
@@ -118,15 +130,15 @@ const selectedBlind = localStorage.getItem("selectedBlind");
 let scoreGoal = 0;
 
 if (selectedBlind === "small") {
-  scoreGoal = 500;
+  scoreGoal = 300;
 }
 
 if (selectedBlind === "big") {
-  scoreGoal = 1000;
+  scoreGoal = 600;
 }
 
 if (selectedBlind === "boss") {
-  scoreGoal = 2000;
+  scoreGoal = 1000;
 }
 
 if (gameState.currentHands === 0 && gameState.playerScore < scoreGoal)
@@ -230,9 +242,30 @@ function detectHand(cards) {
   const occurrences = Object.values(counts);
 
   const isFlush = suits.length >= 5 && suits.every((s) => s === suits[0]);
-  const isStraight =
-    values.length >= 5 &&
-    values.every((v, i, a) => i === 0 || v === a[i - 1] + 1);
+function isStraight(values) {
+  const unique = [...new Set(values)].sort((a, b) => a - b);
+
+  if (unique.length < 5) return false;
+
+  for (let i = 0; i <= unique.length - 5; i++) {
+    let streak = 1;
+
+    for (let j = i + 1; j < unique.length; j++) {
+      if (unique[j] === unique[j - 1] + 1) {
+        streak++;
+        if (streak >= 5) return true;
+      } else {
+        break;
+      }
+    }
+  }
+
+  // Ace-low straight (A-2-3-4-5)
+  const aceLow = [14, 5, 4, 3, 2];
+  if (aceLow.every((v) => unique.includes(v))) return true;
+
+  return false;
+}
 
   // checks top to bottom so if it finds one it stops
 
@@ -273,6 +306,10 @@ function calculateHandScore(cards) {
   const total = baseScore + cardSum;
 
   return total;
+  
+  console.log("HAND TYPE:", handType);
+  console.log("BASE SCORE:", baseScore);
+  console.log("CARD SUM:", cardSum);
 }
 
 // Play hand button

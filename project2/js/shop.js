@@ -42,5 +42,9 @@ document.getElementById("joker2-btn").addEventListener("click", () => {
 
 // skip shop
 document.getElementById("next-blind-button").addEventListener("click", () => {
+
+  localStorage.setItem("inShop", "false");
+
+  // return to blind select
   window.location.href = "blind.html";
 });
