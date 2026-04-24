@@ -127,27 +127,27 @@ const menuTitle = document.getElementById("menu-title");
 
 const selectedBlind = localStorage.getItem("selectedBlind");
 
-let scoreGoal = 0;
+let scoreGoal;
 
 if (selectedBlind === "small") {
   scoreGoal = 300;
-}
-
-if (selectedBlind === "big") {
+} else if (selectedBlind === "big") {
   scoreGoal = 600;
-}
-
-if (selectedBlind === "boss") {
+} else if (selectedBlind === "boss") {
   scoreGoal = 1000;
+} else {
+
+  scoreGoal = 300; // fallback
 }
 
-if (gameState.currentHands === 0 && gameState.playerScore < scoreGoal)
-  if (selectedBlind === "small") {
-    menuTitle.textContent = `Small Blind — Goal: ${scoreGoal}`;
-  }
+if (selectedBlind === "small") {
+  menuTitle.textContent = `Small Blind — Goal: ${scoreGoal}`;
+}
+
 if (selectedBlind === "big") {
   menuTitle.textContent = `Big Blind — Goal: ${scoreGoal}`;
 }
+
 if (selectedBlind === "boss") {
   menuTitle.textContent = `Boss Blind — Goal: ${scoreGoal}`;
 }
@@ -161,14 +161,21 @@ handInfo.style.transform = "translateX(-50%)";
 handInfo.style.textAlign = "center";
 handInfo.style.color = "white";
 handInfo.style.fontSize = "3.5rem";
+
+
+handInfo.style.zIndex = "9999";
+handInfo.style.pointerEvents = "none";
+
 handInfo.style.display = "none";
 document.body.appendChild(handInfo);
 
 // show hand type score + sum of cards
 function showHandPopup(handType, baseScore, cardSum) {
+  console.log("POPUP:", handType);
+  
   handInfo.innerHTML = `${handType.toUpperCase()}<br>${baseScore} + ${cardSum}`;
   handInfo.style.display = "block";
-  setTimeout(() => (handInfo.style.display = "none"), 2000);
+  setTimeout(() => (handInfo.style.display = "none"), 2500);
 }
 
 function getCardRank(card) {
@@ -221,7 +228,7 @@ hand.forEach(renderCard);
 
 // helper: sum values of selected cards
 function sumCardValues(cards) {
-  return cards.reduce((total, card) => total + getCardRank(card), 0);
+  return cards.reduce((total, card) => total + getCardScore(card), 0);
 }
 
 // detect hand type
@@ -234,14 +241,16 @@ function detectHand(cards) {
   const ranks = cards.map((c) => c.slice(0, -1));
   const suits = cards.map((c) => c.slice(-1));
   const values = cards.map(getCardRank).sort((a, b) => a - b);
-
   const counts = {};
+  
   ranks.forEach((r) => {
     counts[r] = (counts[r] || 0) + 1;
   });
   const occurrences = Object.values(counts);
 
   const isFlush = suits.length >= 5 && suits.every((s) => s === suits[0]);
+  
+  
 function isStraight(values) {
   const unique = [...new Set(values)].sort((a, b) => a - b);
 
@@ -260,7 +269,7 @@ function isStraight(values) {
     }
   }
 
-  // Ace-low straight (A-2-3-4-5)
+  // ace straight
   const aceLow = [14, 5, 4, 3, 2];
   if (aceLow.every((v) => unique.includes(v))) return true;
 
@@ -269,11 +278,11 @@ function isStraight(values) {
 
   // checks top to bottom so if it finds one it stops
 
-  if (isFlush && isStraight) return "straightFlush";
+  if (isFlush && isStraight(values)) return "straightFlush";
   if (occurrences.includes(4)) return "fourKind";
   if (occurrences.includes(3) && occurrences.includes(2)) return "fullHouse";
   if (isFlush) return "flush";
-  if (isStraight) return "straight";
+  if (isStraight(values)) return "straight";
   if (occurrences.includes(3)) return "threeKind";
 
   // 2 occurances = pair
@@ -305,8 +314,13 @@ function calculateHandScore(cards) {
   const cardSum = sumCardValues(cards);
   const total = baseScore + cardSum;
 
-  return total;
-  
+  return {
+    handType,
+    baseScore,
+    cardSum,
+    total,
+  };
+
   console.log("HAND TYPE:", handType);
   console.log("BASE SCORE:", baseScore);
   console.log("CARD SUM:", cardSum);
@@ -317,8 +331,13 @@ const playButton = document.querySelector(".play-hand-button");
 playButton.addEventListener("click", () => {
   if (gameState.currentHands > 0 && selectedCards.length > 0) {
     gameState.currentHands--;
-    const totalScore = calculateHandScore(selectedCards);
-    gameState.playerScore += totalScore;
+const scoreData = calculateHandScore(selectedCards);
+
+// show popup at top
+showHandPopup(scoreData.handType, scoreData.baseScore, scoreData.cardSum);
+
+// add score
+gameState.playerScore += scoreData.total;
     updateMenu();
 
     if (gameState.currentHands === 0 && gameState.playerScore < scoreGoal) {
@@ -370,7 +389,7 @@ playButton.addEventListener("click", () => {
       hand.sort((a, b) => getCardRank(b) - getCardRank(a)); // sort descending
       handContainer.innerHTML = ""; // re-render hand
       hand.forEach(renderCard);
-    }, 2000);
+    }, 2500);
   }
 });
 

@@ -19,14 +19,6 @@ document.addEventListener(
 // select all blind buttons on the page
 const blindButtons = document.querySelectorAll(".blind-button");
 
-// add click event listener to each blind button
-blindButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    // when any blind button is clicked, navigate to playing screen
-    window.location.href = "playing.html";
-  });
-});
-
 // function to update the menu display
 function updateMenu() {
   // set the score display
@@ -54,25 +46,40 @@ bossBlindButton.disabled = true;
 
 const defeatedBlind = localStorage.getItem("defeatedBlind");
 
-// pregression system!!!!
-// default state
-let unlocked = {
-  small: true,
-  big: false,
-  boss: false,
-};
+// start only small unlocked
+smallBlindButton.disabled = false;
+bigBlindButton.disabled = true;
+bossBlindButton.disabled = true;
 
-// progression rules
+// progression
 if (defeatedBlind === "small") {
-  unlocked.big = true;
+  smallBlindButton.disabled = true;
+  bigBlindButton.disabled = false;
 }
 
 if (defeatedBlind === "big") {
-  unlocked.big = false;
-  unlocked.boss = true;
+  smallBlindButton.disabled = true;
+  bigBlindButton.disabled = true;
+  bossBlindButton.disabled = false;
 }
 
-// apply to UI
-smallBlindButton.disabled = !unlocked.small;
-bigBlindButton.disabled = !unlocked.big;
-bossBlindButton.disabled = !unlocked.boss;
+smallBlindButton.addEventListener("click", () => {
+  if (!smallBlindButton.disabled) {
+    localStorage.setItem("selectedBlind", "small");
+    window.location.href = "playing.html";
+  }
+});
+
+bigBlindButton.addEventListener("click", () => {
+  if (!bigBlindButton.disabled) {
+    localStorage.setItem("selectedBlind", "big");
+    window.location.href = "playing.html";
+  }
+});
+
+bossBlindButton.addEventListener("click", () => {
+  if (!bossBlindButton.disabled) {
+    localStorage.setItem("selectedBlind", "boss");
+    window.location.href = "playing.html";
+  }
+});
