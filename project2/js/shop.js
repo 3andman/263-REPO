@@ -1,6 +1,10 @@
 import { jokers } from "./jokers.js";
 import { addJoker, getState } from "./state.js";
 
+const music = document.getElementById("bg-music");
+// try autoplay
+music.volume = 0.2;
+
 // load player jokers from central state
 const state = getState();
 let activeJokers = state.jokers || [];
@@ -17,16 +21,29 @@ function shuffle(array) {
 const ownedIds = activeJokers.map((j) => j.id);
 const jokerPool = jokers.filter((j) => !ownedIds.includes(j.id));
 
-const [joker1, joker2] = _.sampleSize(jokerPool, 2);
+const selectedJokers = _.sampleSize(jokerPool, Math.min(2, jokerPool.length));
+
+const joker1 = selectedJokers[0];
+const joker2 = selectedJokers[1];
 
 // fill UI
 document.getElementById("joker1-img").src = joker1.image;
 document.getElementById("joker1-name").textContent = joker1.name;
 document.getElementById("joker1-desc").textContent = joker1.description;
 
-document.getElementById("joker2-img").src = joker2.image;
-document.getElementById("joker2-name").textContent = joker2.name;
-document.getElementById("joker2-desc").textContent = joker2.description;
+if (joker2) {
+  document.getElementById("joker2-img").src = joker2.image;
+  document.getElementById("joker2-name").textContent = joker2.name;
+  document.getElementById("joker2-desc").textContent = joker2.description;
+} else {
+  document.getElementById("joker2-btn").style.display = "none";
+}
+
+if (joker1) {
+  document.getElementById("joker1-img").src = joker1.image;
+  document.getElementById("joker1-name").textContent = joker1.name;
+  document.getElementById("joker1-desc").textContent = joker1.description;
+}
 
 // select joker 1
 document.getElementById("joker1-btn").addEventListener("click", () => {

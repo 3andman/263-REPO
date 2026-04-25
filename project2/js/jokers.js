@@ -41,16 +41,16 @@ export const jokers = [
     },
   },
 
-  {
-    id: "colorblind",
-    name: "Color Blind",
-    description:
-      "Hearts and diamonds count as the same suit. Spades and clubs count as the same suit.",
-    image: "assets/images/jokers/colorblind.png",
-    apply: (gameState) => {
-      gameState.colorBlind = true;
-    },
-  },
+  // {
+  //   id: "colorblind",
+  //   name: "Color Blind",
+  //   description:
+  //     "Hearts and diamonds count as the same suit. Spades and clubs count as the same suit.",
+  //   image: "assets/images/jokers/colorblind.png",
+  //   apply: (gameState) => {
+  //     gameState.colorBlind = true;
+  //   },
+  // },
 
   {
     id: "confident",

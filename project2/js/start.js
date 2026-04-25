@@ -40,7 +40,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 // try autoplay
-music.volume = 0.4;
+music.volume = 0.2;
 
 document.addEventListener(
   "click",

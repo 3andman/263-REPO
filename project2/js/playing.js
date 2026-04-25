@@ -1,4 +1,4 @@
-const activeJokers = JSON.parse(localStorage.getItem("activeJokers")) || [];
+import { applyJokers } from "./state.js";
 
 // GAME STATE
 let gameState = {
@@ -18,7 +18,7 @@ let gameState = {
 
 const music = document.getElementById("bg-music");
 
-music.volume = 0.4;
+music.volume = 0.2;
 
 document.addEventListener(
   "click",
@@ -28,10 +28,28 @@ document.addEventListener(
   { once: true },
 );
 
-// APPLY JOKERS
-activeJokers.forEach((joker) => {
-  if (joker.apply) joker.apply(gameState);
+import { getState } from "./state.js";
+
+const savedState = getState();
+
+savedState.jokers.forEach((joker) => {
+  if (typeof joker.apply === "function") {
+    joker.apply(gameState);
+  }
 });
+
+console.log("JOKERS LOADED:", savedState.jokers);
+console.log("DOUBLE SMALL HANDS:", gameState.doubleSmallHands);
+
+if (gameState.extraHands > 0) {
+  gameState.currentHands += gameState.extraHands;
+}
+
+if (gameState.noDiscards) {
+  gameState.discardsCount = 0;
+}
+
+console.log("ACTIVE JOKERS:", gameState);
 
 // Full deck of 52 cards
 let deck = [
@@ -136,7 +154,6 @@ if (selectedBlind === "small") {
 } else if (selectedBlind === "boss") {
   scoreGoal = 1000;
 } else {
-
   scoreGoal = 300; // fallback
 }
 
@@ -162,7 +179,6 @@ handInfo.style.textAlign = "center";
 handInfo.style.color = "white";
 handInfo.style.fontSize = "3.5rem";
 
-
 handInfo.style.zIndex = "9999";
 handInfo.style.pointerEvents = "none";
 
@@ -172,7 +188,7 @@ document.body.appendChild(handInfo);
 // show hand type score + sum of cards
 function showHandPopup(handType, baseScore, cardSum) {
   console.log("POPUP:", handType);
-  
+
   handInfo.innerHTML = `${handType.toUpperCase()}<br>${baseScore} + ${cardSum}`;
   handInfo.style.display = "block";
   setTimeout(() => (handInfo.style.display = "none"), 2500);
@@ -193,10 +209,21 @@ function getCardRank(card) {
 function getCardScore(card) {
   const rank = card.slice(0, -1);
 
-  if (rank === "A") return 11;
-  if (rank === "J" || rank === "Q" || rank === "K") return 10;
+  let value;
 
-  return parseInt(rank);
+  if (rank === "A") value = 11;
+  else if (rank === "J" || rank === "Q" || rank === "K") value = 10;
+  else value = parseInt(rank);
+
+  // Two Face Joker
+  if (
+    gameState.doubleFaceCards &&
+    (rank === "J" || rank === "Q" || rank === "K")
+  ) {
+    value *= 2;
+  }
+
+  return value;
 }
 
 // render a single card in hand
@@ -242,39 +269,38 @@ function detectHand(cards) {
   const suits = cards.map((c) => c.slice(-1));
   const values = cards.map(getCardRank).sort((a, b) => a - b);
   const counts = {};
-  
+
   ranks.forEach((r) => {
     counts[r] = (counts[r] || 0) + 1;
   });
   const occurrences = Object.values(counts);
 
   const isFlush = suits.length >= 5 && suits.every((s) => s === suits[0]);
-  
-  
-function isStraight(values) {
-  const unique = [...new Set(values)].sort((a, b) => a - b);
 
-  if (unique.length < 5) return false;
+  function isStraight(values) {
+    const unique = [...new Set(values)].sort((a, b) => a - b);
 
-  for (let i = 0; i <= unique.length - 5; i++) {
-    let streak = 1;
+    if (unique.length < 5) return false;
 
-    for (let j = i + 1; j < unique.length; j++) {
-      if (unique[j] === unique[j - 1] + 1) {
-        streak++;
-        if (streak >= 5) return true;
-      } else {
-        break;
+    for (let i = 0; i <= unique.length - 5; i++) {
+      let streak = 1;
+
+      for (let j = i + 1; j < unique.length; j++) {
+        if (unique[j] === unique[j - 1] + 1) {
+          streak++;
+          if (streak >= 5) return true;
+        } else {
+          break;
+        }
       }
     }
+
+    // ace straight
+    const aceLow = [14, 5, 4, 3, 2];
+    if (aceLow.every((v) => unique.includes(v))) return true;
+
+    return false;
   }
-
-  // ace straight
-  const aceLow = [14, 5, 4, 3, 2];
-  if (aceLow.every((v) => unique.includes(v))) return true;
-
-  return false;
-}
 
   // checks top to bottom so if it finds one it stops
 
@@ -296,7 +322,7 @@ function isStraight(values) {
 
 // hand type scores
 const handScores = {
-  highCard: 5,
+  highCard: 10,
   pair: 20,
   twoPair: 40,
   threeKind: 90,
@@ -312,8 +338,34 @@ function calculateHandScore(cards) {
   const handType = detectHand(cards);
   const baseScore = handScores[handType];
   const cardSum = sumCardValues(cards);
-  const total = baseScore + cardSum;
 
+console.log("Baby Hands:", gameState.doubleSmallHands);
+console.log("Cards played:", cards.length);
+console.log("Base score:", baseScore);
+console.log("Before multipliers:", baseScore + cardSum);
+
+  let total = baseScore + cardSum;
+
+  // Last Chance Joker
+  if (gameState.doubleAtZeroDiscards && gameState.discardsCount === 0) {
+    total *= 2;
+  }
+
+  // Baby Hands Joker
+  if (gameState.doubleSmallHands && cards.length <= 3) {
+    total *= 2;
+  }
+
+  // Confident Joker
+  if (gameState.discardScoreBonus > 0) {
+    total += gameState.discardsCount * gameState.discardScoreBonus;
+  }
+
+  console.log("Total after jokers:", total);
+  console.log("HAND TYPE:", handType);
+  console.log("BASE SCORE:", baseScore);
+  console.log("CARD SUM:", cardSum);
+  
   return {
     handType,
     baseScore,
@@ -321,9 +373,8 @@ function calculateHandScore(cards) {
     total,
   };
 
-  console.log("HAND TYPE:", handType);
-  console.log("BASE SCORE:", baseScore);
-  console.log("CARD SUM:", cardSum);
+
+
 }
 
 // Play hand button
@@ -331,13 +382,13 @@ const playButton = document.querySelector(".play-hand-button");
 playButton.addEventListener("click", () => {
   if (gameState.currentHands > 0 && selectedCards.length > 0) {
     gameState.currentHands--;
-const scoreData = calculateHandScore(selectedCards);
+    const scoreData = calculateHandScore(selectedCards);
 
-// show popup at top
-showHandPopup(scoreData.handType, scoreData.baseScore, scoreData.cardSum);
+    // show popup at top
+    showHandPopup(scoreData.handType, scoreData.baseScore, scoreData.cardSum);
 
-// add score
-gameState.playerScore += scoreData.total;
+    // add score
+    gameState.playerScore += scoreData.total;
     updateMenu();
 
     if (gameState.currentHands === 0 && gameState.playerScore < scoreGoal) {

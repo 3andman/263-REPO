@@ -29,11 +29,11 @@ export function addJoker(joker) {
 export function applyJokers(gameState) {
   const state = getState();
 
-  state.jokers.forEach((joker) => {
-    if (typeof joker.apply === "function") {
-      joker.apply(gameState);
-    }
-  });
+_.forEach(state.jokers, (joker) => {
+  if (_.isFunction(joker.apply)) {
+    joker.apply(gameState);
+  }
+});
 
   return gameState;
 }
