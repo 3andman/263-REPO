@@ -18,7 +18,7 @@ function shuffle(array) {
 }
 
 // remove jokers the player already owns
-const ownedIds = activeJokers.map((j) => j.id);
+const ownedIds = activeJokers;
 const jokerPool = jokers.filter((j) => !ownedIds.includes(j.id));
 
 const selectedJokers = _.sampleSize(jokerPool, Math.min(2, jokerPool.length));

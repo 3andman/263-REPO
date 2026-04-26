@@ -60,7 +60,8 @@
 .card:nth-child(8) {transform: rotate(3deg) translateY(21px);}
 .card:nth-child(9) {transform: rotate(4deg) translateY(31px);}
 .card:nth-child(10) {transform: rotate(5deg) translateY(45px);}
-
+.card:nth-child(11) {transform: rotate(6deg) translateY(60px);}
+.card:nth-child(12) {transform: rotate(7deg) translateY(75px);}
 
 /* card image styling */
 .card img {

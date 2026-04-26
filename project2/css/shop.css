@@ -52,7 +52,7 @@
     padding: 20px;
     text-align: center;
 
-    background: #222;
+    background: #483c2d;
     border-radius: 12px;
 }
 
@@ -60,4 +60,21 @@
 .joker-card button {
     margin-top: 10px;
     padding: 10px 16px;
+}
+
+.joker-image {
+    width: 160px;
+    height: auto;
+}
+
+.joker-title {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    color:white;
+}
+
+.joker-desc {
+    font-size: 0.9rem;
+    margin-top: 6px;
+    color: white;
 }

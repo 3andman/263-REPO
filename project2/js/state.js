@@ -20,20 +20,8 @@ export function saveState(state) {
 export function addJoker(joker) {
   const state = getState();
 
-  state.jokers = _.uniqBy([...state.jokers, joker], "id");
+  state.jokers = _.uniq([...state.jokers, joker.id]);
 
   saveState(state);
 }
 
-// apply joker effects
-export function applyJokers(gameState) {
-  const state = getState();
-
-_.forEach(state.jokers, (joker) => {
-  if (_.isFunction(joker.apply)) {
-    joker.apply(gameState);
-  }
-});
-
-  return gameState;
-}

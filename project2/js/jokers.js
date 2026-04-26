@@ -72,3 +72,31 @@ export const jokers = [
     },
   },
 ];
+
+export const jokerEffects = {
+  draw2: (gameState) => {
+    gameState.startingHandSize = (gameState.startingHandSize || 10) + 2;
+  },
+
+  twoface: (gameState) => {
+    gameState.doubleFaceCards = true;
+  },
+
+  lastchance: (gameState) => {
+    gameState.doubleAtZeroDiscards = true;
+  },
+
+  gambler: (gameState) => {
+    gameState.extraHands = (gameState.extraHands || 0) + 2;
+
+    gameState.noDiscards = true;
+  },
+
+  confident: (gameState) => {
+    gameState.discardScoreBonus = 50;
+  },
+
+  babyhands: (gameState) => {
+    gameState.doubleSmallHands = true;
+  },
+};

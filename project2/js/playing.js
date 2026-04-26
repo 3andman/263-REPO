@@ -1,4 +1,3 @@
-import { applyJokers } from "./state.js";
 
 // GAME STATE
 let gameState = {
@@ -15,41 +14,6 @@ let gameState = {
   doubleSmallHands: false,
   handSize: 10,
 };
-
-const music = document.getElementById("bg-music");
-
-music.volume = 0.2;
-
-document.addEventListener(
-  "click",
-  () => {
-    music.play().catch(() => {});
-  },
-  { once: true },
-);
-
-import { getState } from "./state.js";
-
-const savedState = getState();
-
-savedState.jokers.forEach((joker) => {
-  if (typeof joker.apply === "function") {
-    joker.apply(gameState);
-  }
-});
-
-console.log("JOKERS LOADED:", savedState.jokers);
-console.log("DOUBLE SMALL HANDS:", gameState.doubleSmallHands);
-
-if (gameState.extraHands > 0) {
-  gameState.currentHands += gameState.extraHands;
-}
-
-if (gameState.noDiscards) {
-  gameState.discardsCount = 0;
-}
-
-console.log("ACTIVE JOKERS:", gameState);
 
 // Full deck of 52 cards
 let deck = [
@@ -107,6 +71,47 @@ let deck = [
   "AS",
 ];
 
+const music = document.getElementById("bg-music");
+
+music.volume = 0.2;
+
+document.addEventListener(
+  "click",
+  () => {
+    music.play().catch(() => {});
+  },
+  { once: true },
+);
+
+import { getState } from "./state.js";
+import { jokerEffects } from "./jokers.js";
+
+const savedState = getState();
+
+// apply joker effects using IDs
+savedState.jokers.forEach((jokerId) => {
+  const apply = jokerEffects[jokerId];
+
+  if (apply) {
+    apply(gameState);
+  }
+});
+
+console.log("JOKERS LOADED:", savedState.jokers);
+console.log("DOUBLE SMALL HANDS:", gameState.doubleSmallHands);
+
+if (gameState.extraHands > 0) {
+  gameState.currentHands += gameState.extraHands;
+}
+
+if (gameState.noDiscards) {
+  gameState.discardsCount = 0;
+}
+
+console.log("ACTIVE JOKERS:", gameState);
+
+
+
 // update menu display
 function updateMenu() {
   document.getElementById("menu-score").textContent = gameState.playerScore;
@@ -132,13 +137,16 @@ shuffle(deck);
 // Selected cards tracker
 let selectedCards = [];
 
-// Deal initial hand
-let hand = deck.splice(0, gameState.startingHandSize);
-hand.sort((a, b) => getCardRank(b) - getCardRank(a)); // sort descending
 
 // dom containers
 const handContainer = document.querySelector(".hand-container"); // hand of cards
 const playArea = document.querySelector(".play-area"); // played cards area
+
+// Deal initial hand
+let hand = deck.splice(0, gameState.startingHandSize);
+hand.sort((a, b) => getCardRank(b) - getCardRank(a)); // sort descending
+console.log("Starting hand size:", gameState.startingHandSize);
+console.log("Cards dealt:", hand.length);
 
 // update the menu title based on blind
 const menuTitle = document.getElementById("menu-title");
@@ -186,10 +194,11 @@ handInfo.style.display = "none";
 document.body.appendChild(handInfo);
 
 // show hand type score + sum of cards
-function showHandPopup(handType, baseScore, cardSum) {
+function showHandPopup(handType, baseScore, cardSum, total) {
   console.log("POPUP:", handType);
 
-  handInfo.innerHTML = `${handType.toUpperCase()}<br>${baseScore} + ${cardSum}`;
+handInfo.innerHTML =
+  `${handType.toUpperCase()}<br>${baseScore} + ${cardSum}<br>= ${total}`;
   handInfo.style.display = "block";
   setTimeout(() => (handInfo.style.display = "none"), 2500);
 }
@@ -385,7 +394,12 @@ playButton.addEventListener("click", () => {
     const scoreData = calculateHandScore(selectedCards);
 
     // show popup at top
-    showHandPopup(scoreData.handType, scoreData.baseScore, scoreData.cardSum);
+showHandPopup(
+  scoreData.handType,
+  scoreData.baseScore,
+  scoreData.cardSum,
+  scoreData.total,
+);
 
     // add score
     gameState.playerScore += scoreData.total;
@@ -451,6 +465,10 @@ discardButton.addEventListener("click", () => {
     const cardsDiscardedCount = selectedCards.length;
     gameState.discardsCount--;
     updateMenu();
+    
+    console.log("Discard clicked");
+    console.log("Discards left:", gameState.discardsCount);
+    console.log("Selected cards:", selectedCards);
 
     selectedCards.forEach((card) => {
       const cardImg = document.querySelector(
@@ -461,6 +479,9 @@ discardButton.addEventListener("click", () => {
     });
 
     selectedCards = [];
+    
+    console.log("Discarding:", cardsDiscardedCount);
+    console.log("Remaining hand:", hand.length);
 
     setTimeout(() => {
       const newCards = deck.splice(0, cardsDiscardedCount);
