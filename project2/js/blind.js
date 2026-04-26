@@ -6,7 +6,7 @@ let currentBlind = "";
 
 const music = document.getElementById("bg-music");
 
-music.volume = 0.2;
+music.volume = 0.15;
 
 document.addEventListener(
   "click",

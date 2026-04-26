@@ -3,7 +3,7 @@ import { addJoker, getState } from "./state.js";
 
 const music = document.getElementById("bg-music");
 // try autoplay
-music.volume = 0.2;
+music.volume = 0.15;
 
 // load player jokers from central state
 const state = getState();
