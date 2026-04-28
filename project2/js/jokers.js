@@ -4,7 +4,7 @@ export const jokers = [
     id: "draw2",
     name: "Draw Two", // icon will be the uno +2 card
     description: "Hand holds +2 cards.",
-    image: "assets/images/jokers/draw2.png",
+    image: "assets/images/jokers/draw2.webp",
     apply: (gameState) => {
       gameState.startingHandSize = (gameState.startingHandSize || 10) + 2;
     },
@@ -14,7 +14,7 @@ export const jokers = [
     id: "twoface",
     name: "Two Face",
     description: "All face cards score twice.",
-    image: "assets/images/jokers/twoface.png",
+    image: "assets/images/jokers/twoface.webp",
     apply: (gameState) => {
       gameState.doubleFaceCards = true;
     },
@@ -34,7 +34,7 @@ export const jokers = [
     id: "gambler",
     name: "The Gambler",
     description: "Gain 2 hands but lose all discards.",
-    image: "assets/images/jokers/gambler.png",
+    image: "assets/images/jokers/gambler.webp",
     apply: (gameState) => {
       gameState.extraHands = (gameState.extraHands || 0) + 2;
       gameState.noDiscards = true;
@@ -56,7 +56,7 @@ export const jokers = [
     id: "confident",
     name: "Confident",
     description: "Adds 50 score per remaining discard.",
-    image: "assets/images/jokers/confident.png",
+    image: "assets/images/jokers/confident.webp",
     apply: (gameState) => {
       gameState.discardScoreBonus = 50;
     },

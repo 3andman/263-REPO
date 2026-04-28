@@ -15,6 +15,8 @@ startButton.addEventListener("click", () => {
   window.location.href = "blind.html";
 });
 
+//guide button
+
 // open popup
 guideButton.addEventListener("click", () => {
   guidePopup.classList.remove("hidden");
@@ -32,6 +34,7 @@ guidePopup.addEventListener("click", (e) => {
   }
 });
 
+//close with escap
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     guidePopup.classList.add("hidden");
