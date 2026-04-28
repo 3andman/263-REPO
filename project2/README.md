@@ -1,4 +1,4 @@
-xHigh Stakes
+High Stakes
 
 Dylan Samaan
 
